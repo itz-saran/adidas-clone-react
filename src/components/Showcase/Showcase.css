@@ -1,0 +1,38 @@
+.showcase {
+  --ig-visible-rows: 3;
+  --ig-columns: 2;
+  --ig-last-item-span: 0;
+  --ig-max-rows: 5;
+  --ig-scrollbar-width: 1px;
+  --regular-viewer-dynamic-height: calc(100vh - 300px);
+  --regular-viewer-min-height: 600px;
+  --regular-viewer-height: max(
+    var(--regular-viewer-dynamic-height),
+    var(--regular-viewer-min-height)
+  );
+  --regular-viewer-height-compensated: var(--regular-viewer-height) + 2px;
+  --ig-sidebar-width: 0;
+  --ig-total-width: 100vw -var(--ig-sidebar-width) - var(--ig-scrollbar-width);
+  --ig-item-height: (var(--ig-total-width)) / var(--ig-columns);
+}
+
+.collage.grid {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.showcase {
+  height: 615px;
+  max-height: calc(
+    var(--ig-item-height) * (var(--ig-visible-rows) - 1) +
+      var(--regular-viewer-height-compensated)
+  );
+
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  scrollbar-width: 0;
+}
+
+.showcase::-webkit-scrollbar {
+  width: 0;
+  color: transparent;
+}

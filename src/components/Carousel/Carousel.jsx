@@ -1,28 +1,35 @@
 import React, { Component, createRef } from "react";
 
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import InstagramCard from "../InstagramCard/InstagramCard";
 import NewsCard from "../NewsCard/NewsCard";
 
 import ProductCard from "../ProductCard/ProductCard";
 
 import "./Carousel.css";
 
-export class carousel extends Component {
+export class Carousel extends Component {
   constructor(props) {
     super(props);
     this.findWidth = this.findWidth.bind(this);
     this.cardListRef = createRef();
     this.cardWidth = null;
-    this.moveCarousalRight = this.moveCarousalRight.bind(this);
-    this.moveCarousalLeft = this.moveCarousalLeft.bind(this);
+    this.moveCarousal = this.moveCarousal.bind(this);
   }
 
-  moveCarousalRight() {
-    this.cardListRef.current.scrollBy(4 * this.cardWidth, 0);
-  }
-
-  moveCarousalLeft() {
-    this.cardListRef.current.scrollBy(-(4 * this.cardWidth), 0);
+  moveCarousal(direction, times = 0) {
+    times = times <= 0 ? 4 : times;
+    direction = direction.toLowerCase();
+    switch (direction) {
+      case "left":
+        this.cardListRef.current.scrollBy(-(times * this.cardWidth), 0);
+        break;
+      case "right":
+        this.cardListRef.current.scrollBy(times * this.cardWidth, 0);
+        break;
+      default:
+        break;
+    }
   }
 
   findWidth(e) {
@@ -35,13 +42,13 @@ export class carousel extends Component {
         <div className={`carousel-wrapper ${this.props.lg ?? ""}`}>
           <div
             className="carousel-btn btn-left flex-center"
-            onClick={this.moveCarousalLeft}
+            onClick={() => this.moveCarousal("left", this.props.moveBy ?? 0)}
           >
             <FaArrowLeft />
           </div>
           <div className="card-list flex" ref={this.cardListRef}>
             {this.props.products
-              ? this.props.products.map((product, i) => (
+              ? this.props.products.map((product) => (
                   <ProductCard
                     key={product.id}
                     product={product}
@@ -52,13 +59,28 @@ export class carousel extends Component {
               : ""}
             {this.props.news
               ? this.props.news.map((news) => {
-                  return <NewsCard key={news.id} newsItem={news} />;
+                  return (
+                    <NewsCard
+                      callback={this.findWidth}
+                      newsItem={news}
+                      key={news.id}
+                    />
+                  );
                 })
+              : ""}
+            {this.props.mediaPost
+              ? this.props.mediaPost.map((post, idx) => (
+                  <InstagramCard
+                    post={post}
+                    callback={this.findWidth}
+                    key={idx}
+                  />
+                ))
               : ""}
           </div>
           <div
             className="carousel-btn btn-right flex-center"
-            onClick={this.moveCarousalRight}
+            onClick={() => this.moveCarousal("right", this.props.moveBy ?? 0)}
           >
             <FaArrowRight />
           </div>
@@ -68,4 +90,4 @@ export class carousel extends Component {
   }
 }
 
-export default carousel;
+export default Carousel;

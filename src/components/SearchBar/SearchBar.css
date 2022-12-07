@@ -7,6 +7,7 @@
 }
 
 .search-bar input {
+  outline: none;
   padding: 0 35px 0 10px;
   height: 2rem;
   width: 100%;

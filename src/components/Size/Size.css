@@ -6,7 +6,7 @@
   border: 1px solid #eceff1;
 }
 
-.selected {
+.size.selected {
   background-color: black;
   color: white;
 }
@@ -26,4 +26,12 @@
 .size:hover {
   background-color: black;
   color: white;
+}
+
+.alert {
+  margin-top: 10px;
+}
+
+.sizes+.alert {
+  font-size: 14px;
 }

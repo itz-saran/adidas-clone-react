@@ -39,10 +39,9 @@
   right: unset;
   top: unset;
   bottom: 0;
-  transition: transform 0.2s ease-in-out;
 }
 
-.content {
+.product-card .content {
   position: relative;
 }
 
@@ -53,22 +52,12 @@
   background-color: white;
 }
 
-.price {
-  padding: 3px 4px 0;
-  background-color: white;
-}
-
 .product-description {
   margin-top: 10px;
   padding-left: 10px;
 }
 
 .color-grey {
-  color: #767677;
-}
-
-.strike {
-  text-decoration: line-through;
   color: #767677;
 }
 

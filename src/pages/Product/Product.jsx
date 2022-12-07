@@ -1,56 +1,37 @@
-import React, { Component } from "react";
+import React, { useEffect, useRef } from "react";
+import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import "../../components/Header/Header";
 import Header from "../../components/Header/Header";
-import { fetchUrl } from "../../assets/helpers/helper";
+import { getProduct } from "../../redux/productSlice";
 
 import "./Product.css";
-import DetailsPanel from "../../components/DetailsPanel/DetailsPanel";
+import SidePanel from "../../components/SidePanel/SidePanel";
 import Showcase from "../../components/Showcase/Showcase";
 import NewsLetter from "../../components/SignUpAd/NewsLetter";
 import Footer from "../../components/Footer/Footer";
 
-export class Product extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { product: {}, currentShowcase: {} };
-    this.getRef = this.getRef.bind(this);
-  }
+const Product = (props) => {
+  const params = useParams();
+  const headerRef = useRef();
+  const showcaseRef = useRef();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getProduct(params.SKU));
+  }, [dispatch, params.SKU]);
 
-  getRef(refVal, refName) {
-    this[refName] = refVal;
-  }
-
-  componentDidMount() {
-    fetchUrl("forum-low-shoes", "GET").then((res) => {
-      this.setState({
-        ...this.state,
-        product: res,
-        currentShowcase: res.variants[0],
-      });
-      // console.log(this.state);
-    });
-  }
-
-  render() {
-    return (
-      <>
-        <Header />
-        <main className="main-content flex">
-          <Showcase
-            breadcrumb={this.state.product.breadcrumb}
-            current={this.state.currentShowcase}
-          />
-          <DetailsPanel
-            product={this.state.product}
-            current={this.state.currentShowcase}
-          />
-        </main>
-        <NewsLetter />
-        <Footer />
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <Header ref={headerRef} />
+      <main className="main-content flex">
+        <Showcase ref={showcaseRef} />
+        <SidePanel headerRef={headerRef} showcaseRef={showcaseRef} />
+      </main>
+      <NewsLetter />
+      <Footer />
+    </>
+  );
+};
 
 export default Product;

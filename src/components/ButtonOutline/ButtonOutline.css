@@ -1,4 +1,5 @@
 .btn-content {
+  cursor: pointer;
   padding: 0 15px;
   letter-spacing: 2px;
   font-size: 14px;

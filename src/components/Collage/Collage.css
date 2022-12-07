@@ -1,0 +1,13 @@
+.collage-wrapper {
+    overflow: hidden;
+    max-height: calc(var(--ig-item-height)*(var(--ig-visible-rows) - 1) + var(--regular-viewer-height-compensated));
+    position: relative;
+    transition: all 0.3s ease-in;
+}
+
+.breadcrumb-wrapper {
+    position: absolute;
+    z-index: 100;
+    top: 30px;
+    left: 20px;
+}

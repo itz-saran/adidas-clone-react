@@ -13,6 +13,26 @@
   text-align: center;
 }
 
+.bag-container {
+  position: relative;
+}
+
+.wishlist-container {
+  position: relative;
+}
+
+.icon-group .item-count {
+  width: 22px;
+  height: 22px;
+  font-size: 12px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #2B7FB6;
+  color: white;
+  border-radius: 50%;
+}
+
 @media screen and (min-width: 1280px) {
   .menu-right {
     margin-left: 0;

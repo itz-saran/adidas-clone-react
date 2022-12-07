@@ -13,20 +13,21 @@ export class ButtonOutline extends Component {
           this.props.bold ? "f-bold" : ""
         }`}
         style={{
-          maxWidth: this.props.fullWidth
+          maxWidth: this.props.fullwidth
             ? "100%"
             : `${10 + this.props.width ?? 0}rem`,
         }}
+        onClick={this.props.onClick}
       >
         <div className="btn-outline">
-          <div className="btn-content flex">
-            <div>
-              <Link to={this.props.to}>{this.props.title}</Link>
+          <Link to={this.props.to ?? "/"}>
+            <div className="btn-content flex">
+              <div>{this.props.title}</div>
+              <div>
+                <HiArrowNarrowRight />
+              </div>
             </div>
-            <div>
-              <HiArrowNarrowRight />
-            </div>
-          </div>
+          </Link>
         </div>
       </div>
     );

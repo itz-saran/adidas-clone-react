@@ -1,38 +1,74 @@
 .showcase {
-  --ig-visible-rows: 3;
   --ig-columns: 2;
+  --ig-visible-rows: 3;
   --ig-last-item-span: 0;
   --ig-max-rows: 5;
-  --ig-scrollbar-width: 1px;
+  --ig-scrollbar-width: 15px;
   --regular-viewer-dynamic-height: calc(100vh - 300px);
   --regular-viewer-min-height: 600px;
-  --regular-viewer-height: max(
-    var(--regular-viewer-dynamic-height),
-    var(--regular-viewer-min-height)
-  );
+  --regular-viewer-height: max(var(--regular-viewer-dynamic-height), var(--regular-viewer-min-height));
   --regular-viewer-height-compensated: var(--regular-viewer-height) + 2px;
-  --ig-sidebar-width: 0;
-  --ig-total-width: 100vw -var(--ig-sidebar-width) - var(--ig-scrollbar-width);
+  --ig-total-width: 100vw - var(--ig-sidebar-width) - var(--ig-scrollbar-width);
   --ig-item-height: (var(--ig-total-width)) / var(--ig-columns);
 }
 
 .collage.grid {
   grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+}
+
+.showcase .collage-wrapper[aria-expanded="true"] {
+  --ig-visible-rows: var(--ig-max-rows) !important;
 }
 
 .showcase {
-  height: 615px;
-  max-height: calc(
-    var(--ig-item-height) * (var(--ig-visible-rows) - 1) +
-      var(--regular-viewer-height-compensated)
-  );
-
-  overflow-y: hidden;
-  scroll-behavior: smooth;
-  scrollbar-width: 0;
+  width: calc(100% - 430px);
 }
 
-.showcase::-webkit-scrollbar {
-  width: 0;
-  color: transparent;
+.showcase .product-image:first-child {
+  grid-column: span var(--ig-columns);
+  height: var(--regular-viewer-height);
+}
+
+.expand-btn {
+  position: relative;
+  height: 50px;
+}
+
+.expand-btn svg {
+  margin-left: 15px;
+}
+
+.expand-btn button {
+  background-color: white;
+  position: absolute;
+  transform: translateY(-50%);
+  cursor: pointer;
+  border: 1px solid black;
+  height: 100%;
+  padding: 0 15px;
+  font-size: 14px;
+  letter-spacing: 1px;
+  transition: color 0.3s var(--transition-bezier);
+}
+
+.expand-btn button:hover {
+  color: #767677;
+}
+
+.showcase .accordion-container {
+  padding: 0 20px;
+  margin-bottom: 5rem;
+}
+
+@media screen and (min-width:960px) {
+  .showcase .accordion-container {
+    margin-bottom: 74px;
+  }
+}
+
+@media screen and (min-width:1280px) {
+  .showcase {
+    --ig-sidebar-width: 430px;
+  }
 }

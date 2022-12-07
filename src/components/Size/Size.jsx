@@ -1,51 +1,45 @@
-import React, { Component, createRef } from "react";
+import React from "react";
+import { useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { selectSize } from "../../redux/productSlice";
 
 import "./Size.css";
 
-export class Size extends Component {
-  constructor(props) {
-    super(props);
-    this.selectCurrentSize = this.selectCurrentSize.bind(this);
-    this.displayState = this.displayState.bind(this);
-    this.refList = createRef([]);
-    this.refList.current = [];
-    this.state = { selectedSize: null };
-  }
+const Size = (props) => {
+  const { stock } = useSelector((state) => state.product);
+  const dispatch = useDispatch();
+  const refList = useRef([]);
+  refList.current = [];
 
-  componentDidMount() {}
-
-  selectCurrentSize(e) {
-    this.setState({ selectedSize: e.target });
-    this.refList.current?.forEach((btn) => btn.classList.remove("selected"));
+  const selectCurrent = (e, data) => {
+    dispatch(selectSize(data));
+    refList.current?.forEach((btn) => btn.classList.remove("selected"));
     e.target.classList.add("selected");
-    this.displayState();
-  }
+  };
 
-  displayState() {
-    console.log(this.state);
-  }
-
-  render() {
-    // const { qty } = this.state.selectedSize;
-    return (
-      <div className="size-selector">
-        <h4 className="f-bold">Sizes</h4>
-        <div className="sizes grid">
-          {this.props.sizes?.map(({ size, qty }, idx) => (
-            <button
-              onClick={this.selectCurrentSize}
-              key={idx}
-              className="size flex-center"
-              ref={(element) => (this.refList.current[idx] = element)}
-            >
-              {size}
-            </button>
-          ))}
-        </div>
-        {/* {qty > 1 && qty < 10 ? <span className="red">Low in stock</span> : ""} */}
+  return (
+    <div className="size-selector">
+      <h4 className="f-bold">Sizes</h4>
+      <div className="sizes grid">
+        {props.sizes?.map(({ size, stock }, idx) => (
+          <button
+            onClick={(e) => selectCurrent(e, { size, stock })}
+            key={idx}
+            className="size flex-center"
+            ref={(element) => (refList.current[idx] = element)}
+          >
+            {size}
+          </button>
+        ))}
       </div>
-    );
-  }
-}
+      {stock >= 1 && stock <= 10 ? (
+        <div className="red alert">{`Only ${stock} left in stock`}</div>
+      ) : (
+        ""
+      )}
+      {stock === 0 ? <div className="red alert">{`Out of stock`}</div> : ""}
+    </div>
+  );
+};
 
 export default Size;

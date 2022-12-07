@@ -1,0 +1,27 @@
+.accordion {
+    border-top: 1px solid #d3d7da;
+}
+
+.accordion:last-child {
+    border: none;
+    border-bottom: 1px solid #d3d7da;
+}
+
+.accordion .head {
+    cursor: pointer;
+    padding: 30px 15px;
+    font-size: 1rem;
+}
+
+.accordion .content {
+    display: none;
+    padding: 15px 30px;
+}
+
+.head.active {
+    border-left: 3px solid black;
+}
+
+.content.active {
+    display: block;
+}

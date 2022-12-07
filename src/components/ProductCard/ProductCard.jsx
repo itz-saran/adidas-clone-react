@@ -1,10 +1,9 @@
 import React, { Component, createRef } from "react";
 import { Link } from "react-router-dom";
-import { toINR } from "../../assets/helpers/helper";
-
 import { FaRegHeart } from "react-icons/fa";
 
 import "./ProductCard.css";
+import Price from "../Price/Price";
 
 export class ProductCard extends Component {
   constructor(props) {
@@ -14,9 +13,9 @@ export class ProductCard extends Component {
     this.priceRef = createRef();
   }
 
-  // componentDidMount() {
-  //   this.props.callback(this.cardRef);
-  // }
+  componentDidMount() {
+    this.props.callback(this.cardRef);
+  }
 
   componentDidUpdate() {
     this.props.callback(this.cardRef);
@@ -28,49 +27,31 @@ export class ProductCard extends Component {
         <div
           ref={this.cardRef}
           className="product-card card-wrapper f-light"
-          onMouseEnter={
-            () =>
-              (this.priceRef.current.style.cssText =
-                "transform:translateY(-10px)")
-            // this.setState({ style: { transform: `translateY(-10px)` } })
+          onMouseEnter={() =>
+            (this.priceRef.current.style.cssText =
+              "transform:translateY(-10px)")
           }
           onMouseLeave={() =>
             (this.priceRef.current.style.cssText = "transform:translateY(0px)")
           }
         >
-          <Link to={`/product/${this.props.product.id}`}>
+          <Link to={`${this.props.product.to}`}>
             <div className="card-img">
               <img src={`${this.props.product.src}`} alt="" />
               <span>
                 <FaRegHeart />
               </span>
-              <div className="price-detail flex-column" ref={this.priceRef}>
+              <Price
+                discount={this.props.product.discount}
+                price={this.props.product.price}
+                ref={this.priceRef}
+              >
                 {this.props.product.discount ? (
                   <div className="f-bold discount">{`-${this.props.product.discount}%`}</div>
                 ) : (
                   ""
                 )}
-                <div className="flex flex-wrap">
-                  <div
-                    className={`price ${
-                      this.props.product.discount ? "strike" : ""
-                    }`}
-                  >
-                    {toINR(this.props.product.price)}
-                  </div>
-                  {this.props.product.discount ? (
-                    <div className="price red">
-                      {toINR(
-                        this.props.product.price -
-                          this.props.product.price *
-                            (this.props.product.discount / 100)
-                      )}
-                    </div>
-                  ) : (
-                    ""
-                  )}
-                </div>
-              </div>
+              </Price>
             </div>
             <div className="product-description">
               <div>{this.props.product.name}</div>

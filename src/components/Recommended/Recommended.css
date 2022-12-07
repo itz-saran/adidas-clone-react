@@ -1,0 +1,12 @@
+.recommended {
+    padding: 0 20px;
+    margin-bottom: 5rem;
+}
+
+.recommended .title {
+    margin-bottom: 15px;
+}
+
+.recommended .product-card {
+    width: 30vw;
+}
